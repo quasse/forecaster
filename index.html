@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      integrity="undefined"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <title>Weather Forecaster</title>
+  </head>
+  <body>
+    <header class="hero bg-primary text-light text-center">
+      <h1>Weather Dashboard</h1>
+    </header>
+
+    <main class="container">
+      <!--Side search area-->
+      <div class="row">
+        <div class="col-3" id="side-search">
+          <div class="card">
+            <h3 class="card-title text-center mb-0 mt-2">Search For A City</h3>
+            <form id="user-form" class="card-body pt-0 mt-0">
+              <label class="form-label" for="city"></label>
+              <input
+                name="city"
+                id="city"
+                type="text"
+                autofocus="true"
+                class="form-input mb-2 w-100"
+                placeholder="Bakersfield"
+              />
+              <button type="submit" class="btn btn-primary w-100">
+                Get City
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!--Search result-->
+        <div class="col-9">
+          <div class="row" id="search-result">
+            <div class="col-12" id="city-condition">Atlanta</div>
+            <div class="col-12" id="city-forecast">5-Day forecast</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>
