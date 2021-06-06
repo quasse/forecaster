@@ -163,6 +163,7 @@ var formatDate = function (timeStamp) {
   return dateString;
 };
 
+// Display five-day forecast beneath the current weather box
 var displayForecast = function (data) {
   console.log(data);
 
@@ -199,6 +200,8 @@ var displayForecast = function (data) {
     var forecastIconUrl =
       "https://openweathermap.org/img/w/" + forecastIcon + ".png";
     forecastImg.setAttribute("src", forecastIconUrl);
+    forecastImg.style.width = "50px";
+    forecastImg.style.height = "auto";
     forecastCard.append(forecastImg);
 
     forecastRow.append(forecastCard);
@@ -262,7 +265,6 @@ var loadCities = function () {
     return false;
   }
 
-  console.log("saved cities found");
   savedCities = JSON.parse(savedCities);
 
   for (var i = 0; i < savedCities.length; i++) {
