@@ -112,10 +112,29 @@ var displayWeather = function (data, data2) {
   humidityEl.textContent = "Humidity: " + data.main.humidity + "%";
   infoRow.append(humidityEl);
 
-  //TODO get UV index
+  //Get UV index
+  var uv = data2.current.uvi;
+
+  //Create div to hold UV index
   var uvEl = document.createElement("div");
   uvEl.classList = "col-12";
-  uvEl.textContent = "UV Index: " + data2.current.uvi;
+  uvEl.textContent = "UV Index: ";
+
+  //Create span to hold UVI number
+  var uvSpan = document.createElement("span");
+  uvSpan.textContent = uv;
+
+  //Check for color of span
+  if (uv < 3) {
+    uvSpan.classList = "bg-success";
+  } else if (uv > 3 && uv < 8) {
+    uvSpan.classList = "bg-warning";
+  } else {
+    uvSpan.classList = "bg-danger";
+  }
+
+  //Add span to DIV and DIV to row
+  uvEl.append(uvSpan);
   infoRow.append(uvEl);
 
   //Add all rows to infobox
