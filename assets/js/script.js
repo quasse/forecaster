@@ -32,7 +32,7 @@ var getForecast = function (cityInput) {
     })
     .then(function (data) {
       var apiUrl2 =
-        "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+        "https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=" +
         data.coord.lat +
         "&lon=" +
         data.coord.lon +
@@ -174,7 +174,19 @@ var displayForecast = function (data) {
     //Add info
     var forecastP = document.createElement("p");
     forecastP.classList = "card-text";
-    //TODO forecastP.textContent = "Temp: " + data.daily[i].temp.day + "Wind: " + data.daily[i].;
+    forecastP.textContent =
+      "Temp: " +
+      data.daily[i].temp.day +
+      "°F " +
+      "Wind: " +
+      Math.round(data.daily[i].wind_speed) +
+      " MPH " +
+      "Humidity: " +
+      data.daily[i].humidity +
+      "%";
+
+    forecastCard.append(forecastP);
+    forecastRow.append(forecastCard);
   }
 
   forecastEl.append(forecastRow);
