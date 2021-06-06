@@ -2,6 +2,10 @@ var userFormEl = document.querySelector("#user-form");
 var cityInputEl = document.querySelector("#city");
 var currentWeatherEl = document.querySelector("#city-condition");
 var forecastEl = document.querySelector("#city-forecast");
+var historyEl = document.querySelector("#history");
+
+//An array to hold city history
+var cities = [];
 
 //Handles submission for button
 var formSubmitHandler = function (event) {
@@ -12,7 +16,6 @@ var formSubmitHandler = function (event) {
 
     //clear content from form input
     cityInputEl.value = "";
-    //TODO Add method to add button of city to left side of page
   } else {
     alert("Please enter a city");
   }
@@ -46,6 +49,8 @@ var getForecast = function (cityInput) {
             })
             .then(function (data2) {
               displayWeather(data, data2);
+              //Method to add button of city to left side of page
+              addButton(cityInput);
             });
         });
       } else {
@@ -219,4 +224,56 @@ var displayForecast = function (data) {
   forecastEl.append(forecastRow);
 };
 
+//Function to add button to left side of page and save previously searched cities
+var addButton = function (city) {
+  //Check if city is already saved
+  var cityCheck = cities.includes(city);
+
+  if (!cityCheck) {
+    //Create button
+    var cityButton = document.createElement("button");
+    cityButton.classList = "btn btn-secondary w-100 mt-2";
+    cityButton.type = "click";
+    cityButton.textContent = city;
+
+    //Append button to side of page
+    historyEl.append(cityButton);
+
+    //Save city to array
+    cities.push(city);
+
+    //save cities to local storage
+    localStorage.setItem("cities", JSON.stringify(cities));
+  }
+};
+
+var buttonClickHandler = function (event) {
+  //Get target from event
+  var targetEl = event.target;
+
+  getForecast(targetEl.textContent);
+};
+
+//Load cities at when page loads
+var loadCities = function () {
+  var savedCities = localStorage.getItem("cities");
+
+  if (!savedCities) {
+    return false;
+  }
+
+  console.log("saved cities found");
+  savedCities = JSON.parse(savedCities);
+
+  for (var i = 0; i < savedCities.length; i++) {
+    addButton(savedCities[i]);
+  }
+
+  //Set cites array to saved cities
+  cities = savedCities;
+};
+
 userFormEl.addEventListener("submit", formSubmitHandler);
+historyEl.addEventListener("click", buttonClickHandler);
+
+loadCities();
