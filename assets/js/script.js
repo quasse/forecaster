@@ -134,11 +134,6 @@ var formatDate = function (timeStamp) {
 var displayForecast = function (data) {
   console.log(data);
 
-  for (var i = 0; i < data.daily.length; i++) {
-    var date = formatDate(data.daily[i].dt);
-    console.log(date);
-  }
-
   //Clear HTML in case search has been done before
   forecastEl.innerHTML = "";
 
@@ -147,10 +142,40 @@ var displayForecast = function (data) {
   forecastRow.classList = "row";
 
   //create col for header
-  var headerEl = document.createElement("h3");
+  var headerEl = document.createElement("h4");
   headerEl.classList = "col-12 mt-2";
   headerEl.textContent = "5-Day Forecast:";
   forecastRow.append(headerEl);
+
+  //Add cards for five days of weather
+  for (var i = 1; i < 6; i++) {
+    var date = formatDate(data.daily[i].dt);
+
+    //create a card for each day
+    var forecastCard = document.createElement("div");
+    forecastCard.classList = "card col-2 bg-info m-3";
+
+    //create a title for each card
+    var forecastTitle = document.createElement("div");
+    forecastTitle.classList = "card-title";
+    forecastTitle.textContent = date;
+    forecastCard.append(forecastTitle);
+
+    //Add icon to card
+    var forecastImg = document.createElement("img");
+    var forecastIcon = data.daily[i].weather[0].icon;
+    var forecastIconUrl =
+      "https://openweathermap.org/img/w/" + forecastIcon + ".png";
+    forecastImg.setAttribute("src", forecastIconUrl);
+    forecastCard.append(forecastImg);
+
+    forecastRow.append(forecastCard);
+
+    //Add info
+    var forecastP = document.createElement("p");
+    forecastP.classList = "card-text";
+    //TODO forecastP.textContent = "Temp: " + data.daily[i].temp.day + "Wind: " + data.daily[i].;
+  }
 
   forecastEl.append(forecastRow);
 };
