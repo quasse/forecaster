@@ -13,6 +13,8 @@ var formSubmitHandler = function (event) {
     //clear content from form input
     cityInputEl.value = "";
     //TODO Add method to add button of city to left side of page
+  } else {
+    alert("Please enter a city");
   }
 };
 
@@ -28,24 +30,30 @@ var getForecast = function (cityInput) {
   //API call to get initial weather data
   fetch(apiUrl)
     .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      var apiUrl2 =
-        "https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=" +
-        data.coord.lat +
-        "&lon=" +
-        data.coord.lon +
-        "&appid=" +
-        apiKey;
-      //second API call to get UVI index
-      fetch(apiUrl2)
-        .then(function (response2) {
-          return response2.json();
-        })
-        .then(function (data2) {
-          displayWeather(data, data2);
+      if (response.ok) {
+        response.json().then(function (data) {
+          var apiUrl2 =
+            "https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=" +
+            data.coord.lat +
+            "&lon=" +
+            data.coord.lon +
+            "&appid=" +
+            apiKey;
+          //second API call to get UVI index
+          fetch(apiUrl2)
+            .then(function (response2) {
+              return response2.json();
+            })
+            .then(function (data2) {
+              displayWeather(data, data2);
+            });
         });
+      } else {
+        alert("Error: " + response.statusText);
+      }
+    })
+    .catch(function (error) {
+      alert("Unable to connect to OpenWeatherMaps");
     });
 };
 
