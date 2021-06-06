@@ -165,8 +165,6 @@ var formatDate = function (timeStamp) {
 
 // Display five-day forecast beneath the current weather box
 var displayForecast = function (data) {
-  console.log(data);
-
   //Clear HTML in case search has been done before
   forecastEl.innerHTML = "";
 
